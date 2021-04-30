@@ -30,7 +30,7 @@ from SN_semantic_ROIs import SN_semantic_ROIs
 data_path = C.data_path
 main_path = C.main_path
 subjects = C.subjects
-MRI_sub = C.subjects_mri_files
+MRI_sub = C.subjects_mri
 subjects_dir = data_path
 # Parameters
 snr = C.snr
@@ -45,11 +45,11 @@ for i in np.arange(0, 1):
     n_subjects = len(subjects)
     meg = subjects[i]
     mri_subject = MRI_sub[i][1:-1]
-    sub_to = MRI_sub[i]
+    sub_to = MRI_sub[i][1:15]
     print('Participant : ', i)
 
     # morphing ROIs from fsaverage to each individual
-    labels = mne.morph_labels(SN_ROI, subject_to=data_path + sub_to,
+    labels = mne.morph_labels(SN_ROI, subject_to=sub_to,
                               subject_from='fsaverage',
                               subjects_dir=data_path)
 
@@ -163,38 +163,6 @@ for i in np.arange(0, 1):
 # -------------------------------
 #
 # Just as demonstration, plot first PCA component of first label.
-# max_val_t=[]
-# for i in np.arange(0,6):
-#     idx = [i]
-#     stc = stcs_psf[idx[0]]
-
-#     # Maximum for scaling across plots
-#     max_val_t.append(np.max(np.abs(stc.data)))
-
-# for i in np.arange(0,1):
-#     idx = [i]
-#     stc = stcs_psf[idx[0]]
-#     max_val=max(max_val_t)
-#     brain = stc.plot(
-#         subjects_dir=subjects_dir, subject=mri_subject, hemi='split', views='lateral',
-#         clim=dict(kind='value', pos_lims=(0, max_val / 2., max_val)))
-
-#     brain.add_text(0.1, 0.9, label_names[idx[0]], 'title', font_size=16)
-
-
-# for i in [0]:
-#     idx = [i]
-#     stc = stcs_psf[idx[0]]
-#     max_val = np.max(np.abs(stc.data))
-#     brain = stc.plot(
-#         subjects_dir=subjects_dir, subject=mri_subject, hemi='lh', views='lateral',
-#         clim=dict(kind='value', pos_lims=(0, max_val / 5., max_val)))
-
-#     brain.add_text(0.1, 0.9, label_names[idx[0]], 'title', font_size=16)
-
-
-#     brain.add_label(labels[i], borders=True,color='blue')
-
 
 
 
@@ -208,36 +176,3 @@ for i in [0,2,3,4,5]:
 
     brain.add_text(0.1, 0.9, label_names[idx[0]], 'title', font_size=16)
 
-
-#     brain.add_label(labels[i], borders=True,color='blue')
-# leakage = np.zeros([6, 6])
-# my_leakage = np.zeros([6, 6])
-
-# # Restrict the source estimate to our specific labels
-# for i in np.arange(0, 6):
-#     idx = [i]
-#     stc = stcs_psf[idx[0]]
-#     for l in np.arange(0, 6):
-#         stc_label = stc.in_label(labels[l])
-#         leakage[i, l] = np.sum(np.abs(stc_label.data))
-
-# for i in np.arange(0, 6):
-#     my_leakage[i, :] = np.round(leakage[i, :]/np.sum(leakage[i, :]),2)
-   
-
-# max_val_t=[]
-# for i in np.arange(0,3):
-#     idx = [i]
-#     stc = stcs_ctf[idx[0]]
-#     # Maximum for scaling across plots
-#     max_val_t.append(np.max(stc.data))
-
-# for i in np.arange(0,1):
-#     idx = [i]
-#     stc = stcs_ctf[idx[0]]
-#     max_val=max(max_val_t)
-#     brain = stc.plot(
-#         subjects_dir=subjects_dir, subject=mri_subject, hemi='split', views='lateral',
-#         clim=dict(kind='value', pos_lims=(0, max_val / 2., max_val)))
-
-#     brain.add_text(0.1, 0.9,  label_names[idx[0]], 'title', font_size=16)

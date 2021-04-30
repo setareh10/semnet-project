@@ -22,7 +22,7 @@ from mne.minimum_norm import (make_inverse_resolution_matrix,
 data_path = C.data_path
 main_path = C.main_path
 subjects = C.subjects
-MRI_sub = C.subjects_mri_files
+MRI_sub = C.subjects_mri
 subjects_dir = data_path
 # Parameters
 snr = C.snr
@@ -41,11 +41,11 @@ for i in np.arange(0,len(subjects)):  # np.arange(1, len(subjects)):
     n_subjects = len(subjects)
     meg = subjects[i]
     mri_subject = MRI_sub[i][1:-1]
-    sub_to = MRI_sub[i]
+    sub_to = MRI_sub[i][1:15]
     print('Participant : ', i)
 
     # morphing ROIs from fsaverage to each individual
-    labels = mne.morph_labels(SN_ROI, subject_to=data_path + sub_to,
+    labels = mne.morph_labels(SN_ROI, subject_to=sub_to,
                               subject_from='fsaverage',
                               subjects_dir=data_path)
     
